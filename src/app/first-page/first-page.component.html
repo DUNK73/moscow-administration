@@ -1,0 +1,108 @@
+<div class="page">
+  <div class="workspace">
+    <div class="workspace__column1">
+      <section class="logo">
+        <a>logo</a>
+      </section>
+
+      <section class="widget widget-clients">
+        <h2 class="widget__title widget__title-clients">36</h2>
+        <h2 class="widget__title">Клиенты</h2>
+        <div class="line-bar">
+          <div class="line-bar__value line-bar__value1"></div>
+          <div class="line-bar__value line-bar__value2"></div>
+          <div class="line-bar__value line-bar__value3"></div>
+        </div>
+      </section>
+
+      <section class="widget widget-analytics">
+        <h2 class="widget__title widget__title--black">Аналитика</h2>
+        <div class="widget__chart">
+          <app-bar-chart></app-bar-chart>
+        </div>
+      </section>
+
+      <section class="widget widget-kpi">
+        <h2 class="widget__title widget__title--black">KPI</h2>
+        <div class="widget__chart">
+          <app-pie-chart></app-pie-chart>
+        </div>
+      </section>
+    </div>
+    <div class="workspace__column2">
+      <section class="widget widget-export">
+        <div class="widget-export__title">
+          <div class="export-title__title">
+            <h2 class="export-title__title-info widget__block--light block-title">
+              Объемы экспорта
+            </h2>
+            <p class="export-title__title-date">{{ currentDate | date }}</p>
+          </div>
+          <div class="export-title__legend">
+            <ul class="legend-list widget__block--light">
+              <li class="legend-list__item">
+                <span class="legend-list__export-type">Пром</span> <br />
+                экспорт
+              </li>
+              <li class="legend-list__item">
+                <span class="legend-list__export-type">Апк</span> <br />
+                экспорт
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="widget-export__chart">
+          <app-chart></app-chart>
+        </div>
+      </section>
+
+      <section class="widget widget-common-kpi">
+        <div class="widget-common-kpi__chart">
+          <app-radar-chart></app-radar-chart>
+        </div>
+        <div class="widget-common-kpi__info">
+          <h2 class="info__title widget__block widget__block--light block-title">Общий kpi</h2>
+          <div class="info__values widget__block">
+            <app-kpi-value
+              [value]="45"
+              [status]="'сделано'"
+              [percent]="28.4"
+            ></app-kpi-value>
+            <app-kpi-value
+              [value]="145"
+              [status]="'в работе'"
+              [percent]="71.6"
+            ></app-kpi-value>
+          </div>
+          <h2 class="info__title2 widget__block widget__block--light block-title">Экспортне контракты</h2>
+        </div>
+      </section>
+    </div>
+    <div class="workspace__column3">
+      <section class="widget widget-contracts">
+        <h2 class="widget__title widget__title--black">Экспортные контракты</h2>
+        <div class="widget-contracts__info contracts-info">
+          <div class="contracts-info__item">
+            <h2 class="contracts-info__value">6</h2>
+            <p class="contracts-info__description">Контракты</p>
+          </div>
+          <div class="contracts-info__item">
+            <h2 class="contracts-info__value">46 млн $</h2>
+            <p class="contracts-info__description">Общая сумма</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="widget widget-map">
+        <div class="widget__chart">
+          <app-map-chart></app-map-chart>
+        </div>
+      </section>
+
+      <section class="widget widget-contracts-2">
+        <h2 class="widget__title widget__title--black">Контракты</h2>
+        <div class="line-bar"></div>
+      </section>
+    </div>
+  </div>
+</div>
