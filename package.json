@@ -7,7 +7,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+
+    "ghpages-build": "ng build --base-href https://DUNK73.github.io/moscow-administration/",
+    "ghpages-publish": "angular-cli-ghpages -d dist/moscow-administration/ --no-silent"
   },
   "private": true,
   "dependencies": {

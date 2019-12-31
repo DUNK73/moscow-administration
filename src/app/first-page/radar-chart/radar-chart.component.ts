@@ -34,20 +34,20 @@ export class RadarChartComponent implements OnInit, OnDestroy, AfterViewInit {
       chart.data = [
         {
           category: 'Цель к 2024 г.',
-          value1: 500,
+          value1: 133,
         },
         {
           category: 'Контракты',
-          value2: 700
+          value2: 152
         },
         {
           category: 'Соглашения',
-          value3: 800
+          value3: 132
         },
 
       ];
 
-      chart.colors.step = 5;
+      chart.colors.step = 4;
       // chart.dateFormatter.inputDateFormat = 'YYYY-MM-dd';
 
       chart.radius = am4core.percent(90);
@@ -66,36 +66,25 @@ export class RadarChartComponent implements OnInit, OnDestroy, AfterViewInit {
       categoryAxis.renderer.labels.template.fill = am4core.color('#ffffff');
 
       const valueAxis = chart.xAxes.push(new am4charts.ValueAxis<am4charts.AxisRendererCircular>());
-      valueAxis.renderer.labels.template.horizontalCenter = 'left';
+     //  valueAxis.renderer.labels.template.horizontalCenter = 'center';
       valueAxis.strictMinMax = true;
       valueAxis.renderer.maxLabelPosition = 0.99;
       valueAxis.renderer.grid.template.strokeOpacity = 0.07;
-      // dateAxis.min = new Date(2018, 0, 0, 0, 0, 0).getTime();
-      // dateAxis.max = new Date(2019, 0, 0, 0, 0, 0).getTime();
-      // dateAxis.mouseEnabled = false;
+      valueAxis.min = 0;
+      valueAxis.max = 200;
       valueAxis.tooltip.disabled = true;
-      // dateAxis.baseInterval = { count: 1, timeUnit: 'day' };
       valueAxis.renderer.labels.template.disabled = true;
-      valueAxis.renderer.labels.template.fill = am4core.color('#ffffff');
 
-      // var series1 = chart.series.push(new am4charts.RadarColumnSeries());
-      // series1.name = 'Series 1';
-      //// series1.dataFields.openDateX = 'startDate1';
-      // series1.dataFields.valueX = 'value1';
-      // series1.dataFields.categoryY = 'category';
+
+      const series1 = chart.series.push(new am4charts.RadarColumnSeries());
+      series1.name = 'Series 1';
+      // series1.dataFields.openDateX = 'startDate2';
+      series1.dataFields.valueX = 'value1';
+      series1.dataFields.categoryY = 'category';
       // series1.clustered = false;
-      // series1.columns.template.radarColumn.cornerRadius = 30;
-      // series1.columns.template.tooltipText = '{category}: {valueX}';
-
-      const series11 = chart.series.push(new am4charts.RadarColumnSeries());
-      series11.name = 'Series 11';
-      // series11.dataFields.openDateX = 'startDate2';
-      series11.dataFields.valueX = 'value1';
-      series11.dataFields.categoryY = 'category';
-      // series11.clustered = false;
-      series11.columns.template.radarColumn.cornerRadius = 30;
-      series11.columns.template.tooltipText = '{category} 1111: {valueX}';
-      series11.zIndex = 3;
+      series1.columns.template.radarColumn.cornerRadius = 30;
+      series1.columns.template.tooltipText = '{category}: {valueX}';
+      series1.zIndex = 3;
 
       const series2 = chart.series.push(new am4charts.RadarColumnSeries());
       series2.name = 'Series 2';
@@ -117,7 +106,7 @@ export class RadarChartComponent implements OnInit, OnDestroy, AfterViewInit {
       series3.columns.template.tooltipText = '{category}: {valueX}';
 
 
-       chart.seriesContainer.zIndex = -1;
+      chart.seriesContainer.zIndex = -1;
 
       // chart.scrollbarX = new am4core.Scrollbar();
       // chart.scrollbarY = new am4core.Scrollbar();
@@ -127,7 +116,7 @@ export class RadarChartComponent implements OnInit, OnDestroy, AfterViewInit {
       chart.cursor.lineY.disabled = true;
 
       const yearLabel = chart.radarContainer.createChild(am4core.Label);
-      yearLabel.text = '150';
+      yearLabel.text = '200';
       yearLabel.fontSize = 30;
       yearLabel.horizontalCenter = 'middle';
       yearLabel.verticalCenter = 'middle';
