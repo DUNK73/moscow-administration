@@ -64,7 +64,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"first-page-first-page-module":"first-page-first-page-module","canvg":"canvg","pdfmake":"pdfmake","xlsx":"xlsx"}[chunkId]||chunkId) + "-es2015.js"
+/******/ 		return __webpack_require__.p + "" + ({"canvg":"canvg","first-page-first-page-module":"first-page-first-page-module","pdfmake":"pdfmake","xlsx":"xlsx"}[chunkId]||chunkId) + "-es2015.js"
 /******/ 	}
 /******/
 /******/ 	// The require function
