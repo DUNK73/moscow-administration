@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.container__item {
+  width: 50%;
+}
+
+
+
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#analiticsInfoChartDiv {
+  flex-grow: 1;
+}
+
+.indicator__value {
+  display: flex;
+  justify-content: space-around;
+}
+
+.progress {
+  width: 50%;
+  position: relative;
+}
+
+.progress__bar-1,
+.progress__bar-2 {
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progress__bar-1 {
+  width: 100%;
+  background-color: #3f92c2;
+}
+.progress__bar-2 {
+  width: 50%;
+  background-color: #4eb092;
+}

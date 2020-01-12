@@ -1,0 +1,18 @@
+
+.container {
+  padding: 0 20px;
+}
+
+.widget-contracts__info {
+  display: flex;
+  justify-content: space-around;
+}
+
+.contracts-info__item {
+  text-align: center;
+}
+
+.widget-map {
+  margin-bottom: 10px;
+}
+

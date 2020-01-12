@@ -1,0 +1,49 @@
+.container {
+  height: 100%;
+}
+
+.table-fixed {
+  height: 100%;
+}
+
+.table-fixed th {
+  padding: 5px 14px;
+}
+
+.table-fixed-content {
+  border: none;
+}
+
+.table__row-data {
+  color: #ffffff;
+
+  &:nth-child(even),
+  &:nth-child(odd) {
+    background-color: transparent;
+  }
+
+  &:hover {
+    background-color: #263c49;
+  }
+}
+
+.table__row-head {
+  color: #ffffff;
+  font-size: 18px;
+  // background-color: #233541;
+}
+
+.table_date__detail {
+  column-span: 3;
+}
+
+.table__head,
+.table__date {
+  padding-left: 20px;
+}
+
+.table__row.selected,
+.table__row.selected+.table__row {
+  background-color: #233541;
+  // border-top: 1px dashed #ffffff;
+}

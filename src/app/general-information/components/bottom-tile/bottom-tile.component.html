@@ -1,0 +1,25 @@
+<section class="widget widget-common-kpi">
+  <div class="widget-common-kpi__chart">
+    <app-radar-chart></app-radar-chart>
+  </div>
+  <div class="widget-common-kpi__info">
+    <h2 class="info__title widget__block widget__block--light block-title">
+      KPI Моспром
+    </h2>
+    <div class="info__values widget__block">
+      <app-kpi-value
+        [value]="45"
+        [status]="'сделано'"
+        [percent]="28.4"
+      ></app-kpi-value>
+      <app-kpi-value
+        [value]="145"
+        [status]="'в работе'"
+        [percent]="71.6"
+      ></app-kpi-value>
+    </div>
+    <h2 class="info__title2 widget__block widget__block--light block-title">
+      Экспортные результаты
+    </h2>
+  </div>
+</section>

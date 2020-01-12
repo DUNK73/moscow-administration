@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.container__item {
+  width: 50%;
+}
+
+#clientInfoChartDiv {
+  width: 100%;
+  height: 100%;
+}

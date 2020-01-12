@@ -1,12 +1,22 @@
+<!-- <router-outlet></router-outlet>
+<div style="border:solid 1px red">
+  <router-outlet name="right-tile-outlet"></router-outlet>
+</div> -->
+
 <div class="page">
   <div class="workspace">
     <div class="workspace__column1">
-
       <section class="logo">
-        <a><img src="assets/images/logo.png"></a>
+        <a><img src="assets/images/logo.png"/></a>
       </section>
 
-      <section class="widget widget-clients">
+      <section
+        class="widget widget-clients tile-tab"
+        [ngClass]="{
+          'tile--selected': this.currentTab === 'client'
+        }"
+        (click)="toggle('client')"
+      >
         <h2 class="widget__title widget__title-clients">36</h2>
         <h2 class="widget__title">Клиенты</h2>
         <div class="line-bar">
@@ -16,25 +26,36 @@
         </div>
       </section>
 
-      <section class="widget widget-analytics">
-        <h2 class="widget__title widget__title--black">Аналитика</h2>
+      <section
+        class="widget widget-analytics"
+        [ngClass]="{
+          'tile--selected': this.currentTab === 'apk' || this.currentTab === 'prom'
+        }"
+      >
+        <h2 class="widget__title">Аналитика</h2>
         <div class="widget__chart">
           <app-bar-chart></app-bar-chart>
+        </div>
+        <div class="widget-analytics__buttons">
+          <a href="javascript:void(0)" (click)="toggle('apk')">Апк</a>
+          <a href="javascript:void(0)" (click)="toggle('prom')">Пром</a>
         </div>
       </section>
 
       <section class="widget widget-kpi">
-        <h2 class="widget__title widget__title--black">KPI</h2>
+        <h2 class="widget__title">KPI</h2>
         <div class="widget__chart">
           <app-pie-chart></app-pie-chart>
         </div>
       </section>
     </div>
     <div class="workspace__column2">
-      <section class="widget widget-export">
+      <!-- <section class="widget widget-export" *ngIf="!currentTab">
         <div class="widget-export__title">
           <div class="export-title__title">
-            <h2 class="export-title__title-info widget__block--light block-title">
+            <h2
+              class="export-title__title-info widget__block--light block-title"
+            >
               Объемы экспорта
             </h2>
             <p class="export-title__title-date">{{ currentDate | date }}</p>
@@ -57,30 +78,24 @@
         </div>
       </section>
 
-      <section class="widget widget-common-kpi">
-        <div class="widget-common-kpi__chart">
-          <app-radar-chart></app-radar-chart>
-        </div>
-        <div class="widget-common-kpi__info">
-          <h2 class="info__title widget__block widget__block--light block-title">Общий kpi</h2>
-          <div class="info__values widget__block">
-            <app-kpi-value
-              [value]="45"
-              [status]="'сделано'"
-              [percent]="28.4"
-            ></app-kpi-value>
-            <app-kpi-value
-              [value]="145"
-              [status]="'в работе'"
-              [percent]="71.6"
-            ></app-kpi-value>
-          </div>
-          <h2 class="info__title2 widget__block widget__block--light block-title">Экспортные контракты</h2>
-        </div>
+      <section class="widget widget-export" *ngIf="currentTab === 'client'">
+        <app-clients></app-clients>
+      </section> -->
+
+      <section class="widget">
+        <router-outlet name="top-tile-outlet"></router-outlet>
+      </section>
+
+      <section class="widget">
+        <router-outlet name="bottom-tile-outlet"></router-outlet>
       </section>
     </div>
     <div class="workspace__column3">
-      <section class="widget widget-contracts">
+      <section class="widget">
+        <router-outlet name="right-tile-outlet"></router-outlet>
+      </section>
+
+      <!-- <section class="widget widget-contracts">
         <h2 class="widget__title widget__title--black">Экспортные контракты</h2>
         <div class="widget-contracts__info contracts-info">
           <div class="contracts-info__item">
@@ -103,7 +118,7 @@
       <section class="widget widget-contracts-2">
         <h2 class="widget__title widget__title--black">Контракты</h2>
         <div class="line-bar"></div>
-      </section>
+      </section> -->
     </div>
   </div>
 </div>

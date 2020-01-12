@@ -1,0 +1,29 @@
+
+.widget-export__title {
+  display: flex;
+  justify-content: space-between;
+}
+.export-title__title-info {
+  padding: 20px;
+  margin: 0;
+}
+
+.export-title__legend {}
+
+.legend-list {
+  box-sizing: border-box;
+  display: flex;
+  margin: 0;
+  padding: 20px;
+}
+
+.legend-list__item {
+  box-sizing: border-box;
+  list-style: none;
+  padding: 0 60px 0 20px;
+}
+
+.legend-list__export-type {
+  font-size: 26px;
+  text-transform: uppercase;
+}

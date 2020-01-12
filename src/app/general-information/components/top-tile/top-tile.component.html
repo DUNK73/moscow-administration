@@ -1,0 +1,27 @@
+<section class="widget widget-export">
+  <div class="widget-export__title">
+    <div class="export-title__title">
+      <h2
+        class="export-title__title-info widget__block--light block-title"
+      >
+        Объемы экспорта
+      </h2>
+      <p class="export-title__title-date">{{ currentDate | date }}</p>
+    </div>
+    <div class="export-title__legend">
+      <ul class="legend-list widget__block--light">
+        <li class="legend-list__item">
+          <span class="legend-list__export-type">Пром</span> <br />
+          экспорт
+        </li>
+        <li class="legend-list__item">
+          <span class="legend-list__export-type">Апк</span> <br />
+          экспорт
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="widget-export__chart">
+    <app-chart></app-chart>
+  </div>
+</section>

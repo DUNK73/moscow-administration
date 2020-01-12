@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ClientsModule } from '../clients/clients.module';
+import { GeneralInformationModule } from '../general-information/general-information.module';
+import { AnaliticsModule } from './../analitics/analitics.module';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { ChartComponent } from './chart/chart.component';
+import { ChartModule } from './chart/chart.module';
 import { FirstPageRoutingModule } from './first-page-routing.module';
 import { FirstPageComponent } from './first-page.component';
-import { KpiValueComponent } from './kpi-value/kpi-value.component';
-import { MapChartComponent } from './map-chart/map-chart.component';
+import { MapChartModule } from './map-chart/map-chart.module';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
-import { RadarChartComponent } from './radar-chart/radar-chart.component';
+import { RadarChartModule } from './radar-chart/radar-chart.module';
 
 @NgModule({
   imports: [
@@ -15,16 +17,23 @@ import { RadarChartComponent } from './radar-chart/radar-chart.component';
 
     FirstPageRoutingModule,
 
+    ClientsModule,
+    AnaliticsModule,
+    GeneralInformationModule,
+
+    ChartModule,
+    MapChartModule,
+    RadarChartModule,
+
   ],
   declarations: [
     FirstPageComponent,
-    KpiValueComponent,
 
-    ChartComponent,
+    // ChartComponent,
     BarChartComponent,
     PieChartComponent,
-    MapChartComponent,
-    RadarChartComponent
+    // MapChartComponent,
+    // RadarChartComponent
   ]
 })
 export class FirstPageModule { }

@@ -1,0 +1,26 @@
+
+
+.widget-common-kpi {
+  display: flex;
+}
+
+.widget-common-kpi__chart,
+.widget-common-kpi__info {
+  width: 50%;
+}
+
+.info__title {
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+}
+
+.info__values {
+  display: flex;
+}
+
+.info__title2 {
+  box-sizing: border-box;
+  padding: 36px 20px;
+  text-align: center;
+}

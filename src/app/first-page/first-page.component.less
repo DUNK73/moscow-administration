@@ -36,6 +36,13 @@
   flex-direction: column;
 }
 
+// #region tab
+.tile-tab {
+  cursor: pointer;
+}
+
+// #endregion
+
 
 .logo {
   display: flex;
@@ -51,8 +58,10 @@
   padding-top: 0;
 }
 
+
 ::ng-deep .widget__block {
   margin: 0px 6px 6px 0;
+
   &--black {
     background-color: #233541;
   }
@@ -72,6 +81,14 @@
   height: calc((100vh - 62px) / 3);
   background-color: #233947;
   margin: 0px 6px 6px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.workspace__column1 .widget--selected {
+  background-color: #19272f;
 }
 
 .widget__title {
@@ -96,7 +113,7 @@
 
 
 
-.widget-clients {
+.workspace__column1 .widget-clients {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -142,7 +159,14 @@
 
 
 
+.widget__chart {
+  flex-grow: 1;
+}
 
+.widget-analytics__buttons {
+  display: flex;
+  justify-content: space-around;
+}
 
 
 .workspace__column2 .widget {
@@ -150,37 +174,10 @@
   height: calc(100vh / 2);
   margin: 0px 6px 6px 0;
   border-bottom: 2px solid #233947;
+  overflow-y: auto;
 }
 
 
-.widget-export__title {
-  display: flex;
-  justify-content: space-between;
-}
-.export-title__title-info {
-  padding: 20px;
-  margin: 0;
-}
-
-.export-title__legend {}
-
-.legend-list {
-  box-sizing: border-box;
-  display: flex;
-  margin: 0;
-  padding: 20px;
-}
-
-.legend-list__item {
-  box-sizing: border-box;
-  list-style: none;
-  padding: 0 60px 0 20px;
-}
-
-.legend-list__export-type {
-  font-size: 26px;
-  text-transform: uppercase;
-}
 .widget-export__chart {
   position: relative;
   height: 250px;
@@ -188,39 +185,6 @@
 
 
 
-.widget-common-kpi {
-  display: flex;
-}
-
-.widget-common-kpi__chart,
-.widget-common-kpi__info {
-  width: 50%;
-}
-
-.info__title {
-  box-sizing: border-box;
-  padding: 20px;
-  text-align: center;
-}
-
-.info__values {
-  display: flex;
-}
-
-.info__title2 {
-  box-sizing: border-box;
-  padding: 36px 20px;
-  text-align: center;
-}
-
-.widget-contracts__info {
-  display: flex;
-  justify-content: space-around;
-}
-.contracts-info__item {
-  text-align: center;
-}
-
-.widget-map {
-  margin-bottom: 10px;
+.workspace__column3 .widget {
+  height: 100%;
 }
