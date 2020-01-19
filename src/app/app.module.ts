@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +9,7 @@ import { RootSecondaryComponent } from './shared/RootSecondaryComponent/RootSeco
 import { ChildComponent } from './shared/ChildComponent/ChildComponent.component';
 import { ChildPrimaryComponent } from './shared/ChildPrimaryComponent/ChildPrimaryComponent.component';
 import { SharedComponent } from './shared/shared.component';
+import { CoreInterceptorService } from './core/interceptors/core-interceptor.service';
 
 
 @NgModule({
@@ -29,6 +30,11 @@ import { SharedComponent } from './shared/shared.component';
     HttpClientModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CoreInterceptorService,
+      multi: true
+    }
 
   ],
   bootstrap: [AppComponent]

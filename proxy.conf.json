@@ -1,0 +1,15 @@
+{
+  "/api": {
+    "target": "http://app.prom.moscow/",
+    "secure": false,
+    "logLevel": "debug",
+    "clientLogLevel": "silent",
+    "changeOrigin": true
+  },
+
+  "/rest": {
+    "target": "https://online.rsb.ru/",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

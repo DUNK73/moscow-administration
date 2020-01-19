@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { switchMap, map, startWith } from 'rxjs/operators';
-import { Client } from 'src/app/models/client';
-import { ClientsDataService } from 'src/app/shared/dtata-services/clients-data.service';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { CompaniesDataService } from 'src/app/core/dtata-services/companies-data.service';
+import { Client } from 'src/app/models/client';
+import { ClientsDataService } from 'src/app/core/dtata-services/clients-data.service';
 
 
 
@@ -27,11 +28,16 @@ export class ClientsComponent implements OnInit {
 
   constructor(
     private clientsDataService: ClientsDataService,
+    private companiesDataService: CompaniesDataService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+
+    this.companiesDataService.getCompanies()
+      .subscribe();
+
     this.clients$ = this.clientsDataService.getClients()
       .pipe(
         switchMap((clients) => {

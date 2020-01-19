@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Client } from 'src/app/models/client';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
-import { ClientsDataService } from 'src/app/shared/dtata-services/clients-data.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { switchMap, startWith, map } from 'rxjs/operators';
-import { AnaliticsDataService } from 'src/app/shared/dtata-services/analitics-data.service';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { AnaliticsDataService } from 'src/app/core/dtata-services/analitics-data.service';
 import { Industry } from '../../../models/industry';
-import { ActivityTypeMapper, ActivityType } from '../../models/activity-type.enum';
+import { ActivityType, ActivityTypeMapper } from '../../models/activity-type.enum';
 
 @Component({
   selector: 'app-analitics-top-tile',

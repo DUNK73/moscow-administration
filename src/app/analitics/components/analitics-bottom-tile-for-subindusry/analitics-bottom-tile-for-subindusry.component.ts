@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit, NgZone } from '@angular/co
 import * as am4charts from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-import { AnaliticsDataService } from 'src/app/shared/dtata-services/analitics-data.service';
+import { AnaliticsDataService } from 'src/app/core/dtata-services/analitics-data.service';
 import { Industry } from 'src/app/models/industry';
 import { tap, takeUntil } from 'rxjs/operators';
 import { ActivityType, ActivityTypeMapper } from '../../models/activity-type.enum';
