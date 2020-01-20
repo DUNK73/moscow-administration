@@ -24,10 +24,7 @@ export class CompaniesDataService {
       return of(this.companies);
     }
 
-    let headers: HttpHeaders = new HttpHeaders();
 
-    // return this.http.post<any>('api-login/api-token-auth/', {});
-    // return this.http.get<any>('rest/common/artifact');
     return this.http.get<Array<Company>>('api/companies')
       .pipe(
         map(x => {
@@ -51,6 +48,9 @@ export class CompaniesDataService {
       .pipe(
         map(x => {
           return x.find(y => y.id === id);
+        }),
+        tap(x => {
+          console.log(x);
         })
       );
 

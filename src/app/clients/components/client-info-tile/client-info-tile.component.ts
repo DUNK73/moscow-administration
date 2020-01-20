@@ -35,7 +35,9 @@ export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit
   ) { }
 
   ngOnInit() {
+  }
 
+  ngAfterViewInit() {
     this.activatedRoute.params
       .pipe(
         tap(params => {
@@ -50,7 +52,6 @@ export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit
         takeUntil(this.unsubscribe$$)
       )
       .subscribe();
-
   }
 
   public initChar(company: Company) {
@@ -144,9 +145,6 @@ export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
 
-  ngAfterViewInit() {
-
-  }
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
