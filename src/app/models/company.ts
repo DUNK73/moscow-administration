@@ -1,4 +1,5 @@
 export interface Company {
+  id: number;
   enum: number;
   title_com: string;
   web_site: string;
@@ -7,7 +8,10 @@ export interface Company {
   industry_com: string;
   segment_com: string;
   countries: any[];
-  aim_countries: string[];
+  aim_countries: Array<{
+    'name': string,
+    'alpha2': string
+  }>;
   success_story: boolean;
   description: string;
   logo?: any;

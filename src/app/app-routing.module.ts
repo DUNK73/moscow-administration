@@ -78,8 +78,8 @@ const appRoutes: Routes = [
       [
         { path: '', component: ChildPrimaryComponent },
         { path: 'childSecondaryPath', component: PieChartComponent, outlet: 'right-tile-outlet' },
-        { path: 'client-info-results/:clientId', component: ClientInfoResultsTileComponent, outlet: 'right-tile-outlet' },
-        { path: 'client-info/:clientId', component: ClientInfoTileComponent, outlet: 'bottom-tile-outlet' },
+        { path: 'client-info-results/:companyId', component: ClientInfoResultsTileComponent, outlet: 'right-tile-outlet' },
+        { path: 'client-info/:companyId', component: ClientInfoTileComponent, outlet: 'bottom-tile-outlet' },
 
         { path: 'clients-top-tile', component: ClientsComponent, outlet: 'top-tile-outlet' },
         { path: 'clients-right-tile', component: ClientInfoResultsTileComponent, outlet: 'right-tile-outlet' },

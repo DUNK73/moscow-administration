@@ -3,9 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
-import { CompaniesDataService } from 'src/app/core/dtata-services/companies-data.service';
-import { Client } from 'src/app/models/client';
 import { ClientsDataService } from 'src/app/core/dtata-services/clients-data.service';
+import { CompaniesDataService } from 'src/app/core/dtata-services/companies-data.service';
+import { Company } from 'src/app/models/company';
 
 
 
@@ -16,9 +16,9 @@ import { ClientsDataService } from 'src/app/core/dtata-services/clients-data.ser
 })
 export class ClientsComponent implements OnInit {
 
-  public clients$: Observable<Array<Client>>;
+  public company$: Observable<Array<Company>>;
 
-  public selected: Client;
+  public selected: Company;
 
   public searchForm: FormGroup = new FormGroup({
     title: new FormControl(),
@@ -35,10 +35,8 @@ export class ClientsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.companiesDataService.getCompanies()
-      .subscribe();
 
-    this.clients$ = this.clientsDataService.getClients()
+    this.company$ = this.companiesDataService.getCompanies()
       .pipe(
         switchMap((clients) => {
           return this.searchForm.valueChanges
@@ -51,10 +49,10 @@ export class ClientsComponent implements OnInit {
               }) => {
                 if (searchValue) {
                   return clients.filter(f => {
-                    return (f.title || '').toUpperCase().includes((searchValue.title || '').toUpperCase())
-                      && (f.turnoverSum && f.turnoverSum.toString() || '')
+                    return (f.title_com || '').toUpperCase().includes((searchValue.title || '').toUpperCase())
+                      && (f.export_turnover && f.export_turnover.toString() || '')
                         .includes((searchValue.turnoverSum && searchValue.turnoverSum.toString() || ''))
-                      && (f.exportSum && f.exportSum.toString() || '')
+                      && (f.revenue && f.revenue.toString() || '')
                         .includes((searchValue.exportSum && searchValue.exportSum.toString() || ''));
                   });
                 } else {
@@ -76,7 +74,7 @@ export class ClientsComponent implements OnInit {
   //     }
   //   ]"
 
-  public toggleSelected(item: Client) {
+  public toggleSelected(item: Company) {
 
     let outlets: {
       [key: string]: Array<any>
@@ -91,8 +89,8 @@ export class ClientsComponent implements OnInit {
     } else {
       this.selected = item;
       outlets = {
-        'right-tile-outlet': ['client-info-results', 0],
-        'bottom-tile-outlet': ['client-info', 0]
+        'right-tile-outlet': ['client-info-results', item.id],
+        'bottom-tile-outlet': ['client-info', item.id]
       };
     }
 

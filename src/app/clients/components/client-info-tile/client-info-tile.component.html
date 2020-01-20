@@ -1,21 +1,20 @@
 <div class="container tile--selected">
-
   <div class="container__item">
-    <div id="clientInfoChartDiv"></div>
+    <div class="container__chart" #chartContainer></div>
   </div>
 
   <div class="container__item">
-    <h2>Сделано:</h2>
-    <ul>
-      <li></li>
-      <li></li>
-    </ul>
+    <ng-container *ngIf="this.company$ | async as company">
+      <h2>Сделано:</h2>
+      <ul>
+        <li *ngFor="let item of company.exhibitions">{{ item }}</li>
+        <li *ngFor="let item of company.support_from_mp">{{ item }}</li>
+      </ul>
 
-    <h2>В работе:</h2>
-    <ul>
-      <li></li>
-      <li></li>
-    </ul>
+      <h2>В работе:</h2>
+      <ul>
+        <li *ngFor="let item of company.in_progress_mp">{{ item }}</li>
+      </ul>
+    </ng-container>
   </div>
-
 </div>

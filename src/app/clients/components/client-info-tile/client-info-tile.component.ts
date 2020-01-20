@@ -1,7 +1,14 @@
 import * as am4charts from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ClientsDataService } from 'src/app/core/dtata-services/clients-data.service';
+import { CompaniesDataService } from 'src/app/core/dtata-services/companies-data.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { Company } from 'src/app/models/company';
+import { tap, takeUntil } from 'rxjs/operators';
+import { ActivityTypeMapper } from 'src/app/analitics/models/activity-type.enum';
 
 
 @Component({
@@ -12,15 +19,41 @@ import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/co
 export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private chart: am4charts.RadarChart;
+  public company$: Observable<Company> = new Observable();
+
+  @ViewChild('chartContainer')
+  private chartContainer: ElementRef;
+
+  private unsubscribe$$ = new Subject();
 
   constructor(
-    private zone: NgZone
+    private clientsDataService: ClientsDataService,
+    private companiesDataService: CompaniesDataService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private zone: NgZone,
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+
+    this.activatedRoute.params
+      .pipe(
+        tap(params => {
+          let companyId = +params['companyId'];
+          this.company$ = this.companiesDataService.getCompany(companyId)
+            .pipe(
+              tap((company: Company) => {
+                this.initChar(company);
+              })
+            );
+        }),
+        takeUntil(this.unsubscribe$$)
+      )
+      .subscribe();
+
   }
 
-  ngAfterViewInit() {
+  public initChar(company: Company) {
     this.zone.runOutsideAngular(() => {
 
 
@@ -28,18 +61,18 @@ export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit
       am4core.useTheme(am4themes_animated);
 
       /* Create chart instance */
-      this.chart = am4core.create('clientInfoChartDiv', am4charts.RadarChart);
+      this.chart = am4core.create(this.chartContainer.nativeElement, am4charts.RadarChart);
 
       const chart = this.chart;
 
       chart.data = [
         {
           category: 'Оборот	компании',
-          value1: 153,
+          value1: +company.revenue,
         },
         {
           category: 'Экспортный	оборот',
-          value2: 132
+          value2: +company.export_turnover
         },
 
       ];
@@ -104,11 +137,14 @@ export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit
       chart.cursor.lineY.disabled = true;
 
       const yearLabel = chart.radarContainer.createChild(am4core.Label);
-      yearLabel.text = '200';
+      yearLabel.text = '215';
       yearLabel.fontSize = 30;
       yearLabel.horizontalCenter = 'middle';
       yearLabel.verticalCenter = 'middle';
     });
+  }
+
+  ngAfterViewInit() {
 
   }
 
@@ -118,6 +154,7 @@ export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit
         this.chart.dispose();
       }
     });
+    this.unsubscribe$$.next();
   }
 
 }

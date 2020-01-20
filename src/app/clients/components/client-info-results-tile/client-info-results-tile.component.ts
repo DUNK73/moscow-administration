@@ -2,6 +2,12 @@ import { Component, OnInit, OnDestroy, AfterViewInit, NgZone, ViewChild, Element
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
+import { tap, takeUntil, switchMap } from 'rxjs/operators';
+import { Company } from 'src/app/models/company';
+import { Subject, Observable } from 'rxjs';
+import { ClientsDataService } from 'src/app/core/dtata-services/clients-data.service';
+import { CompaniesDataService } from 'src/app/core/dtata-services/companies-data.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-client-info-results-tile',
@@ -11,18 +17,42 @@ import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 export class ClientInfoResultsTileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private chart: am4maps.MapChart;
+  public company$: Observable<Company> = new Observable();
 
   @ViewChild('chartContainer')
   private chartContainer: ElementRef;
 
+  private unsubscribe$$ = new Subject();
+
   constructor(
+    private clientsDataService: ClientsDataService,
+    private companiesDataService: CompaniesDataService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
     private zone: NgZone,
   ) { }
 
   ngOnInit(): void {
-  }
 
-  ngAfterViewInit() {
+    this.activatedRoute.params
+      .pipe(
+        switchMap(params => {
+
+          let companyId = +params['companyId'];
+
+          return this.companiesDataService.getCompany(companyId)
+            .pipe(
+              tap((company: Company) => {
+                this.initChar(company);
+              })
+            );
+        }),
+        takeUntil(this.unsubscribe$$)
+      )
+      .subscribe();
+
+  }
+  initChar(company: Company) {
     this.zone.runOutsideAngular(() => {
 
       // Create map instance
@@ -54,42 +84,50 @@ export class ClientInfoResultsTileComponent implements OnInit, OnDestroy, AfterV
       // Remove Antarctica
       polygonSeries.exclude = ['AQ'];
 
-      const color1 =  am4core.color('#F05C5C');
-      const color2 =  am4core.color('rgb(92, 240, 183)');
+      const color1 = am4core.color('#F05C5C');
+      const color2 = am4core.color('rgb(92, 240, 183)');
+
+      polygonSeries.data = company.aim_countries.map(country => {
+        return {
+          id: country.alpha2,
+          name: country.name,
+          fill: color1
+        }
+      });
 
       // Add some data
-      polygonSeries.data = [
-        {
-          id: 'US',
-          name: 'United States',
-          value: 100,
-          fill: color1
-        },
-        {
-          id: 'FR',
-          name: 'France',
-          value: 50,
-          fill: color1
-        },
-        {
-          id: 'CN',
-          name: 'China',
-          value: 500,
-          fill: color2
-        },
-        {
-          id: 'BH',
-          name: 'Bahrain',
-          value: 50,
-          fill: color2
-        },
-        {
-          id: 'BR',
-          name: 'Brazil',
-          value: 50,
-          fill: color2
-        },
-      ];
+      // [
+      //   {
+      //     id: 'US',
+      //     name: 'United States',
+      //     value: 100,
+      //     fill: color1
+      //   },
+      //   {
+      //     id: 'FR',
+      //     name: 'France',
+      //     value: 50,
+      //     fill: color1
+      //   },
+      //   {
+      //     id: 'CN',
+      //     name: 'China',
+      //     value: 500,
+      //     fill: color2
+      //   },
+      //   {
+      //     id: 'BH',
+      //     name: 'Bahrain',
+      //     value: 50,
+      //     fill: color2
+      //   },
+      //   {
+      //     id: 'BR',
+      //     name: 'Brazil',
+      //     value: 50,
+      //     fill: color2
+      //   },
+      // ];
 
       // Bind "fill" property to "fill" key in data
       polygonTemplate.propertyFields.fill = 'fill';
@@ -126,6 +164,9 @@ export class ClientInfoResultsTileComponent implements OnInit, OnDestroy, AfterV
         title: 'Vancouver'
       }];
     });
+  }
+
+  ngAfterViewInit() {
 
   }
 
@@ -135,6 +176,7 @@ export class ClientInfoResultsTileComponent implements OnInit, OnDestroy, AfterV
         this.chart.dispose();
       }
     });
+    this.unsubscribe$$.next();
   }
 
 }
