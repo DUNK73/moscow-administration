@@ -8,8 +8,39 @@
 .container__item {
   height: 50%;
 }
+.container__item--scrolled {
+  overflow-y: auto;
+}
+
+.data-chart {
+  display: flex;
+  flex-direction: column;
+}
 
 .chart-container {
-  width: 100%;
+  flex-grow: 1;
   color: rgb(92, 240, 183);
+}
+
+
+.data-viewer {
+  display: flex;
+  flex-direction: column;
+}
+.data-viewer__data {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.data {
+  padding: 0;
+}
+
+.data-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.data-item__value {
+  padding: 0 20px 0 0;
 }

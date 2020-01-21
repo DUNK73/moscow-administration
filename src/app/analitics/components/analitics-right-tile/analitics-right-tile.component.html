@@ -1,21 +1,25 @@
 <div class="container tile--selected">
-  <div class="container__item">
-    <h2 class="widget__title widget__title--black">Экспортные результаты</h2>
 
-    <div class="widget__chart">
-      <!-- <app-map-chart></app-map-chart> -->
-      <div class="chart-container" #chartContainer></div>
-    </div>
+  <div class="container__item data-chart">
+    <h2 class="widget__title widget__title--black">Экспортные результаты</h2>
+    <!-- <app-map-chart></app-map-chart> -->
+    <div class="chart-container" #chartContainer></div>
   </div>
 
-  <div class="container__item">
-    <ul>
-      <li>Страна - Сумма</li>
-      <li>Страна - Сумма</li>
-      <li>Страна - Сумма</li>
-      <li>Страна - Сумма</li>
-      <li>Страна - Сумма</li>
+  <div class="container__item data-viewer">
+    <div class="data-viewer__filter">
+      <input
+        placeholder="страна"
+        [formControl]="this.searchForm.get('title')"
+      />
+    </div>
+    <ul class="data-viewer__data data">
+      <li *ngFor="let item of data$ | async" class="data-item">
+        <span class="data-item__label">{{ item.country.name }}</span>
+        <span class="data-item__value"> {{ item.volume }}</span>
+      </li>
     </ul>
     <div class="line-bar"></div>
   </div>
+
 </div>

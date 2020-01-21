@@ -7,7 +7,9 @@ import { ClientsDataService } from 'src/app/core/dtata-services/clients-data.ser
 import { CompaniesDataService } from 'src/app/core/dtata-services/companies-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AnaliticsDataService } from '../../../core/dtata-services/analitics-data.service';
-import { tap } from 'rxjs/operators';
+import { tap, startWith, map } from 'rxjs/operators';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-analitics-right-tile',
@@ -18,8 +20,27 @@ export class AnaliticsRightTileComponent implements OnInit, OnDestroy, AfterView
 
   private chart: am4maps.MapChart;
 
+  public data: Array<AnaliticsByCountry>;
+
   @ViewChild('chartContainer')
   private chartContainer: ElementRef;
+
+  public searchForm: FormGroup = new FormGroup({
+    title: new FormControl()
+  });
+
+  public data$: Observable<Array<AnaliticsByCountry>> = this.searchForm.valueChanges
+    .pipe(
+      map(value => value.title),
+      map((title: string) => {
+        if (this.data) {
+          return this.data.filter(item => item.country.name.toLowerCase().includes(title.toLowerCase()))
+        } else {
+          return [];
+        }
+      })
+    );
+
 
   constructor(
     private analiticsDataService: AnaliticsDataService,
@@ -29,6 +50,7 @@ export class AnaliticsRightTileComponent implements OnInit, OnDestroy, AfterView
   ) { }
 
   ngOnInit(): void {
+
   }
 
   ngAfterViewInit() {
@@ -36,6 +58,8 @@ export class AnaliticsRightTileComponent implements OnInit, OnDestroy, AfterView
     this.analiticsDataService.getAnaliticsForPromByCounties()
       .pipe(
         tap(data => {
+          this.data = data;
+          this.searchForm.setValue({ title: '' });
           this.initChart(data);
         })
       )
