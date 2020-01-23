@@ -22,6 +22,8 @@ export class AnaliticsRightTileComponent implements OnInit, OnDestroy, AfterView
 
   public data: Array<AnaliticsByCountry>;
 
+  public actualDate: string;
+
   @ViewChild('chartContainer')
   private chartContainer: ElementRef;
 
@@ -60,6 +62,7 @@ export class AnaliticsRightTileComponent implements OnInit, OnDestroy, AfterView
         tap(data => {
           this.data = data;
           this.searchForm.setValue({ title: '' });
+          this.actualDate = data[data.length - 1].month;
           this.initChart(data);
         })
       )
