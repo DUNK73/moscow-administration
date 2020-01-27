@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { AnaliticsDataService } from 'src/app/core/dtata-services/analitics-data.service';
-import { Industry } from '../../../models/industry';
+import { Industry, SubIndustry } from '../../../models/industry';
 import { ActivityType, ActivityTypeMapper } from '../../models/activity-type.enum';
 
 @Component({
@@ -39,7 +39,7 @@ export class AnaliticsTopTileComponent implements OnInit {
     this.activityType = this.activatedRoute.snapshot.params['activityType'];
     this.activityTypeLabel = ActivityTypeMapper.getLabel(this.activityType);
 
-    this.data$ = this.analiticsDataService.getAnalitics()
+    this.data$ = this.analiticsDataService.getApkIndustries()
       .pipe(
         switchMap((clients) => {
           return this.searchForm.valueChanges
@@ -78,6 +78,15 @@ export class AnaliticsTopTileComponent implements OnInit {
   //   ]"
 
   public toggleSelected(item: Industry) {
+
+    this.analiticsDataService
+      .getApkSubIndustries(item)
+      .pipe(
+        tap((subIndustryList: Array<SubIndustry>) => {
+          item.subIndustries = subIndustryList;
+        })
+      )
+      .subscribe();
 
     let outlets: {
       [key: string]: Array<any>

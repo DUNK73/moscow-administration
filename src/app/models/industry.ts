@@ -1,16 +1,18 @@
 export interface Industry {
   id: number;
   title: string;
-  exportSum: number;
-  subIndustry: Array<SubIndustry>;
+  indicator: Indicator;
+  subIndustries: Array<SubIndustry>;
 }
 
 export interface SubIndustry {
   title: string;
-  exportDataList: Array<{
-    date: Date,
-    value: number
-  }>;
+  indicator: Array<Indicator>;
+}
+
+export interface Indicator {
+  date: Date;
+  value: number;
 }
 
 export interface RootObject {

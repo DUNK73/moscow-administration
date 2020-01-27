@@ -49,7 +49,7 @@ export class AnaliticsBottomTileComponent implements OnInit, OnDestroy, AfterVie
     let chartData = data.map(item => {
       return {
         category: item.title,
-        value: item.exportSum
+        value: item.indicator.value
       };
     });
 
@@ -69,7 +69,7 @@ export class AnaliticsBottomTileComponent implements OnInit, OnDestroy, AfterVie
       const pieSeries = this.chart.series.push(new am4charts.PieSeries());
       pieSeries.dataFields.value = 'value';
       pieSeries.dataFields.category = 'category';
-      pieSeries.slices.template.tooltipText = '{category}: {value}';
+      pieSeries.slices.template.tooltipText = '{category}:\n {value}';
 
       // Let's cut a hole in our Pie chart the size of 40% the radius
       this.chart.innerRadius = am4core.percent(40);
@@ -88,15 +88,14 @@ export class AnaliticsBottomTileComponent implements OnInit, OnDestroy, AfterVie
 
   ngAfterViewInit() {
 
-    this.analiticsDataService.getAnalitics()
+    this.analiticsDataService
+      .getApkIndustries()
       .pipe(
         tap(data => {
           this.initChart(data);
         })
       )
       .subscribe();
-
-
 
   }
 

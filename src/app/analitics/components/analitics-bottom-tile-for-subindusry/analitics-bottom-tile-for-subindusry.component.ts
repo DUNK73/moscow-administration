@@ -4,11 +4,11 @@ import * as am4core from '@amcharts/amcharts4/core';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { AnaliticsDataService } from 'src/app/core/dtata-services/analitics-data.service';
 import { Industry } from 'src/app/models/industry';
-import { tap, takeUntil } from 'rxjs/operators';
+import { tap, takeUntil, switchMap } from 'rxjs/operators';
 import { ActivityType, ActivityTypeMapper } from '../../models/activity-type.enum';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { SubIndustry } from '../../../models/industry';
+import { SubIndustry, Indicator } from '../../../models/industry';
 
 @Component({
   selector: 'app-analitics-bottom-tile-for-subindusry',
@@ -21,7 +21,7 @@ export class AnaliticsBottomTileForSubIndustryComponent implements OnInit, OnDes
 
   public activityType: ActivityType;
   public activityTypeLabel: string;
-  public industryId: string;
+  public industryId: number;
   public industryLabel: string;
 
   private unsubscribe$$ = new Subject();
@@ -37,9 +37,9 @@ export class AnaliticsBottomTileForSubIndustryComponent implements OnInit, OnDes
     this.activatedRoute.params
       .pipe(
         tap(params => {
-          this.activityType = params['activityType'];
+          this.activityType = params.activityType;
           this.activityTypeLabel = ActivityTypeMapper.getLabel(this.activityType);
-          this.industryId = params['industry'];
+          this.industryId = +params.industry;
         }),
         tap(params => {
           this.ngAfterViewInit();
@@ -57,14 +57,22 @@ export class AnaliticsBottomTileForSubIndustryComponent implements OnInit, OnDes
 
   private initChart(data: Industry) {
 
-    if (!data || !data.subIndustry) {
+    if (!data || !data.subIndustries) {
       return;
     }
 
-    const chartData = data.subIndustry.map(item => {
+    const chartData = data.subIndustries.map(item => {
+      let value: number;
+
+      if (item.indicator instanceof Array) {
+        value = item.indicator[item.indicator.length - 1].value;
+      } else {
+        value = (item.indicator as Indicator).value;
+      }
+
       return {
         category: item.title,
-        value: item.exportDataList[item.exportDataList.length - 1].value
+        value,
       };
     });
 
@@ -76,6 +84,7 @@ export class AnaliticsBottomTileForSubIndustryComponent implements OnInit, OnDes
 
       /* Create chart instance */
       this.chart = am4core.create('analiticsInfoChartDiv', am4charts.PieChart);
+      this.chart.colors.step = 10;
 
       // Add data
       this.chart.data = chartData;
@@ -103,17 +112,32 @@ export class AnaliticsBottomTileForSubIndustryComponent implements OnInit, OnDes
 
   ngAfterViewInit() {
 
-    this.analiticsDataService.getAnalitics()
+    this.analiticsDataService.getApkIndustries()
       .pipe(
-        tap(data => {
-          const industry = data.find(x => x.id === +this.industryId);
-          if (industry) {
-            this.industryLabel = industry.title;
-            this.initChart(industry);
-          }
+        switchMap((list: Array<Industry>) => {
+          const industry = list.find(item => item.id === this.industryId);
+
+          this.industryLabel = industry.title;
+
+          return this.analiticsDataService
+            .getApkSubIndustries(industry)
+            .pipe(
+              tap(data => {
+                // this.industryLabel = industry.title;
+                this.initChart({
+                  id: this.industryId,
+                  title: this.industryId.toString(),
+                  indicator: null,
+                  subIndustries: data
+                });
+
+              })
+            );
+
         })
       )
       .subscribe();
+
   }
 
   ngOnDestroy() {
