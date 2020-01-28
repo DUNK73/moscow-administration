@@ -93,7 +93,8 @@ export class AnaliticsBottomTileComponent implements OnInit, OnDestroy, AfterVie
       .pipe(
         tap(data => {
           this.initChart(data);
-        })
+        }),
+        takeUntil(this.unsubscribe$$)
       )
       .subscribe();
 

@@ -134,7 +134,8 @@ export class AnaliticsBottomTileForSubIndustryComponent implements OnInit, OnDes
               })
             );
 
-        })
+        }),
+        takeUntil(this.unsubscribe$$)
       )
       .subscribe();
 
