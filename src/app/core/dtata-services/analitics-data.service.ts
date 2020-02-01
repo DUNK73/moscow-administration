@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Client } from 'src/app/models/client';
-import { Industry, AnaliticsByCountry, SubIndustry } from '../../models/industry';
+import { Industry, AnaliticsByCountry, SubIndustry, Indicator } from '../../models/industry';
 import { Company } from 'src/app/models/company';
-import { map } from '@amcharts/amcharts4/.internal/core/utils/Iterator';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +15,15 @@ export class AnaliticsDataService {
     private http: HttpClient,
   ) { }
 
+  private correctIndicator(data: { [key: string]: any }) {
+    if (!data) {
+      return null;
+    }
+    return {
+      ...data,
+      value: data.volume
+    } as Indicator;
+  }
 
   public getAnalitics(): Observable<Array<Industry>> {
 
@@ -90,10 +98,31 @@ export class AnaliticsDataService {
   }
 
   public getApkIndustries(): Observable<Array<Industry>> {
-    return this.http.get<Array<Industry>>('api/analitic/apk/industries');
+    return this.http.get<Array<Industry>>('api/analitic/apk/industries')
+      .pipe(
+        map(data => {
+          return data.map(item => {
+            return {
+              ...item,
+              indicator: this.correctIndicator(item.indicator[(item.indicator as any as Array<Indicator>).length - 1]),
+              // value: (item as any).volume,
+            };
+          });
+        })
+      );
   }
   public getApkSubIndustries(industry: Industry): Observable<Array<SubIndustry>> {
-    return this.http.get<Array<SubIndustry>>(`api/analitic/apk/industries/${industry.id}/subindustries`);
+    return this.http.get<Array<SubIndustry>>(`api/analitic/apk/industries/${industry.id}/subindustries`)
+      .pipe(
+        map(data => {
+          return data.map(item => {
+            return {
+              ...item,
+              indicator: item.indicator.map(this.correctIndicator),
+            };
+          });
+        })
+      );
   }
 
   public getAnaliticsForPromByCounties(): Observable<Array<AnaliticsByCountry>> {
