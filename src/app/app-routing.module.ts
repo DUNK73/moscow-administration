@@ -20,6 +20,8 @@ import { AnaliticsTopTileComponent } from './analitics/components/analitics-top-
 import { AnaliticsBottomTileComponent } from './analitics/components/analitics-bottom-tile/analitics-bottom-tile.component';
 import { AnaliticsRightTileComponent } from './analitics/components/analitics-right-tile/analitics-right-tile.component';
 import { AnaliticsBottomTileForSubIndustryComponent } from './analitics/components/analitics-bottom-tile-for-subindusry/analitics-bottom-tile-for-subindusry.component';
+import { LoginComponent } from './core/authentication/login/login.component';
+import { AutenticationGuard } from './core/authentication/authentication-guard.service';
 
 
 const routes: Routes = [
@@ -58,48 +60,81 @@ const routes: Routes = [
 ];
 
 const appRoutes: Routes = [
-  { path: '', component: RootPrimaryComponent },
-  { path: 'rootSecondaryPath', component: RootSecondaryComponent, outlet: 'rootSecondary' },
+
+  { path: '', component: LoginComponent },
   {
-    path: 'child', component: ChildComponent,
+    path: 'main', component: FirstPageComponent,
+    canActivate: [AutenticationGuard],
     children:
       [
         { path: '', component: ChildPrimaryComponent },
-        { path: 'childSecondaryPath', component: ChildSecondaryComponent, outlet: 'childSecondary' },
-      ]
-  },
-  // {
-  //   path: 'first-page',
-  //   loadChildren: () => import('./first-page/first-page.module').then(module => module.FirstPageModule)
-  // },
-  {
-    path: 'first-page', component: FirstPageComponent,
-    children:
-      [
-        { path: '', component: ChildPrimaryComponent },
-        { path: 'childSecondaryPath', component: PieChartComponent, outlet: 'right-tile-outlet' },
-        { path: 'client-info-results/:companyId', component: ClientInfoResultsTileComponent, outlet: 'right-tile-outlet' },
-        { path: 'client-info/:companyId', component: ClientInfoTileComponent, outlet: 'bottom-tile-outlet' },
 
-        { path: 'clients-top-tile', component: ClientsComponent, outlet: 'top-tile-outlet' },
-        { path: 'clients-right-tile', component: ClientInfoResultsTileComponent, outlet: 'right-tile-outlet' },
-
-        { path: 'analitics-top-tile/:activityType', component: AnaliticsTopTileComponent, outlet: 'top-tile-outlet' },
-        { path: 'analitics-bottom-tile/:activityType', component: AnaliticsBottomTileComponent, outlet: 'bottom-tile-outlet' },
         {
-          path: 'analitics-bottom-tile-for-subindustry/:activityType/:industry',
-          component: AnaliticsBottomTileForSubIndustryComponent, outlet: 'bottom-tile-outlet'
+          path: 'clients-top-tile', component: ClientsComponent,
+          outlet: 'top-tile-outlet',
+          data: { animation: 'clients-top-tile' }
         },
-        { path: 'analitics-right-tile/:activityType', component: AnaliticsRightTileComponent, outlet: 'right-tile-outlet' },
         {
-          path: 'analitics-right-tile-for-subindustry/:activityType/:industry',
-          component: AnaliticsRightTileForSubIndustryComponent, outlet: 'right-tile-outlet'
+          path: 'clients-bottom-tile/:companyId', component: ClientInfoTileComponent,
+          outlet: 'bottom-tile-outlet',
+          data: { animation: 'clients-bottom-tile' }
+        },
+        {
+          path: 'clients-right-tile/:companyId', component: ClientInfoResultsTileComponent,
+          outlet: 'right-tile-outlet',
+          data: { animation: 'clients-right-tile' }
+        },
+        {
+          path: 'clients-right-tile', component: ClientInfoResultsTileComponent,
+          outlet: 'right-tile-outlet',
+          data: { animation: 'clients-right-tile' }
         },
 
 
-        { path: 'general-top-tile', component: TopTileComponent, outlet: 'top-tile-outlet' },
-        { path: 'general-bottom-tile', component: BottomTileComponent, outlet: 'bottom-tile-outlet' },
-        { path: 'general-right-tile', component: RightTileComponent, outlet: 'right-tile-outlet' },
+
+
+        {
+          path: 'analitics-top-tile/:activityType', component: AnaliticsTopTileComponent,
+          outlet: 'top-tile-outlet',
+          data: { animation: 'analitics-top-tile' }
+        },
+        {
+          path: 'analitics-bottom-tile/:activityType', component: AnaliticsBottomTileComponent,
+          outlet: 'bottom-tile-outlet',
+          data: { animation: 'analitics-bottom-tile' }
+        },
+        {
+          path: 'analitics-bottom-tile-for-subindustry/:activityType/:industry', component: AnaliticsBottomTileForSubIndustryComponent,
+          outlet: 'bottom-tile-outlet',
+          data: { animation: 'analitics-bottom-tile-for-subindustry' }
+        },
+        {
+          path: 'analitics-right-tile/:activityType', component: AnaliticsRightTileComponent,
+          outlet: 'right-tile-outlet',
+          data: { animation: 'analitics-right-tile' }
+        },
+        {
+          path: 'analitics-right-tile-for-subindustry/:activityType/:industry', component: AnaliticsRightTileForSubIndustryComponent,
+          outlet: 'right-tile-outlet',
+          data: { animation: 'analitics-right-tile-for-subindustry' }
+        },
+
+
+        {
+          path: 'general-top-tile', component: TopTileComponent,
+          outlet: 'top-tile-outlet',
+          data: { animation: 'general-top-tile' }
+        },
+        {
+          path: 'general-bottom-tile', component: BottomTileComponent,
+          outlet: 'bottom-tile-outlet',
+          data: { animation: 'general-bottom-tile' }
+        },
+        {
+          path: 'general-right-tile', component: RightTileComponent,
+          outlet: 'right-tile-outlet',
+          data: { animation: 'general-right-tile' }
+        },
 
       ]
   },

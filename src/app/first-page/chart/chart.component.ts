@@ -2,6 +2,8 @@ import { Component, OnInit, NgZone, OnDestroy, AfterViewInit } from '@angular/co
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+import { animationTimeout } from '../animations';
+
 
 @Component({
   selector: 'app-chart',
@@ -21,59 +23,62 @@ export class ChartComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.zone.runOutsideAngular(() => {
-      const chart = am4core.create('chartdiv', am4charts.XYChart);
 
-      chart.paddingRight = 20;
+    setTimeout(() => {
+      this.zone.runOutsideAngular(() => {
+        const chart = am4core.create('chartdiv', am4charts.XYChart);
 
-      const data = [];
-      let visits = 10;
-      let visits2 = 15;
-      for (let i = 1; i < 10; i++) {
-        visits += Math.round((Math.random()) * Math.random() * 10);
-        visits2 += Math.round((Math.random()) * Math.random() * 10);
-        data.push({
-          date: new Date(2010 + i, 0, 0),
-          name: 'name' + i,
-          value: visits,
-          value2: visits2,
-        });
-      }
+        chart.paddingRight = 20;
 
-      chart.data = data;
+        const data = [];
+        let visits = 10;
+        let visits2 = 15;
+        for (let i = 1; i < 10; i++) {
+          visits += Math.round((Math.random()) * Math.random() * 10);
+          visits2 += Math.round((Math.random()) * Math.random() * 10);
+          data.push({
+            date: new Date(2010 + i, 0, 0),
+            name: 'name' + i,
+            value: visits,
+            value2: visits2,
+          });
+        }
 
-      const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-      dateAxis.renderer.grid.template.location = 0;
-      dateAxis.renderer.labels.template.fill = am4core.color('#ffffff');
+        chart.data = data;
 
-      const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.tooltip.disabled = true;
-      valueAxis.renderer.minWidth = 35;
-      valueAxis.renderer.labels.template.fill = am4core.color('#ffffff');
-      valueAxis.title.text = 'млрд $';
-      valueAxis.title.fill = am4core.color('#ffffff');
+        const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.renderer.grid.template.location = 0;
+        dateAxis.renderer.labels.template.fill = am4core.color('#ffffff');
 
-      const series = chart.series.push(new am4charts.LineSeries());
-      // series.data = data;
-      series.dataFields.dateX = 'date';
-      series.dataFields.valueY = 'value';
-      series.bullets.push(new am4charts.CircleBullet());
+        const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.tooltip.disabled = true;
+        valueAxis.renderer.minWidth = 35;
+        valueAxis.renderer.labels.template.fill = am4core.color('#ffffff');
+        valueAxis.title.text = 'млрд $';
+        valueAxis.title.fill = am4core.color('#ffffff');
 
-      const series2 = chart.series.push(new am4charts.LineSeries());
-      series2.dataFields.dateX = 'date';
-      series2.dataFields.valueY = 'value2';
-      series2.bullets.push(new am4charts.CircleBullet());
+        const series = chart.series.push(new am4charts.LineSeries());
+        // series.data = data;
+        series.dataFields.dateX = 'date';
+        series.dataFields.valueY = 'value';
+        series.bullets.push(new am4charts.CircleBullet());
 
-      series.tooltipText = '{valueY.value}';
-      chart.cursor = new am4charts.XYCursor();
+        const series2 = chart.series.push(new am4charts.LineSeries());
+        series2.dataFields.dateX = 'date';
+        series2.dataFields.valueY = 'value2';
+        series2.bullets.push(new am4charts.CircleBullet());
 
-      const scrollbarX = new am4charts.XYChartScrollbar();
-      scrollbarX.series.push(series);
-      // scrollbarX.series.push(series2);
-      // chart.scrollbarX = scrollbarX;
+        series.tooltipText = '{valueY.value}';
+        chart.cursor = new am4charts.XYCursor();
 
-      this.chart = chart;
-    });
+        const scrollbarX = new am4charts.XYChartScrollbar();
+        scrollbarX.series.push(series);
+        // scrollbarX.series.push(series2);
+        // chart.scrollbarX = scrollbarX;
+
+        this.chart = chart;
+      });
+    }, animationTimeout);
   }
 
   ngOnDestroy() {

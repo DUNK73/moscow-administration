@@ -82,17 +82,17 @@
         <app-clients></app-clients>
       </section> -->
 
-      <section class="widget">
-        <router-outlet name="top-tile-outlet"></router-outlet>
+      <section class="widget" [@routeTopTileAnimation]="prepareRoute(topTileOutlet)">
+        <router-outlet name="top-tile-outlet" #topTileOutlet="outlet"></router-outlet>
       </section>
 
-      <section class="widget">
-        <router-outlet name="bottom-tile-outlet"></router-outlet>
+      <section class="widget" [@routeBottomTileAnimation]="prepareRoute(bottomTileOutlet)">
+        <router-outlet name="bottom-tile-outlet" #bottomTileOutlet="outlet"></router-outlet>
       </section>
     </div>
     <div class="workspace__column3">
-      <section class="widget">
-        <router-outlet name="right-tile-outlet"></router-outlet>
+      <section class="widget" [@routeRightTileAnimation]="prepareRoute(rightTileOutlet)">
+        <router-outlet name="right-tile-outlet" #rightTileOutlet="outlet"></router-outlet>
       </section>
 
       <!-- <section class="widget widget-contracts">

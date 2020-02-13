@@ -20,7 +20,7 @@ export class ChildPrimaryComponent implements OnInit {
   setChildSecondary() {
     this.router.navigate(
       // [ 'fp2' ],
-      [ { outlets: { 'right-tile-outlet': ['client-info-results'] } }],
+      [ { outlets: { 'right-tile-outlet': ['clients-right-tile'] } }],
       // { skipLocationChange: true }
       { relativeTo: this.route }
     );

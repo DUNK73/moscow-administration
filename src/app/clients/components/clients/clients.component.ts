@@ -68,8 +68,8 @@ export class ClientsComponent implements OnInit {
   //   '../',
   //     {
   //       outlets: {
-  //         right-tile-outlet: ['client-info-results', item.id],
-  //         'bottom-tile-outlet': ['../','client-info', item.id]
+  //         right-tile-outlet: ['clients-right-tile', item.id],
+  //         'bottom-tile-outlet': ['../','clients-bottom-tile', item.id]
   //       }
   //     }
   //   ]"
@@ -89,8 +89,8 @@ export class ClientsComponent implements OnInit {
     } else {
       this.selected = item;
       outlets = {
-        'right-tile-outlet': ['client-info-results', item.id],
-        'bottom-tile-outlet': ['client-info', item.id]
+        'right-tile-outlet': ['clients-right-tile', item.id],
+        'bottom-tile-outlet': ['clients-bottom-tile', item.id]
       };
     }
 

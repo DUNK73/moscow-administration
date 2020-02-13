@@ -5,10 +5,11 @@ import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild, Element
 import { ClientsDataService } from 'src/app/core/dtata-services/clients-data.service';
 import { CompaniesDataService } from 'src/app/core/dtata-services/companies-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { Company } from 'src/app/models/company';
 import { tap, takeUntil } from 'rxjs/operators';
 import { ActivityTypeMapper } from 'src/app/analitics/models/activity-type.enum';
+import { animationTimeout } from '../../../first-page/animations';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit
 
   private chart: am4charts.RadarChart;
   public company$: Observable<Company> = new Observable();
+  public company$$: Subject<Company> = new ReplaySubject<Company>(1);
 
   @ViewChild('chartContainer')
   private chartContainer: ElementRef;
@@ -35,21 +37,48 @@ export class ClientInfoTileComponent implements OnInit, OnDestroy, AfterViewInit
   ) { }
 
   ngOnInit() {
-  }
-
-  ngAfterViewInit() {
     this.activatedRoute.params
       .pipe(
         tap(params => {
-          let companyId = +params['companyId'];
+          const companyId = +params['companyId'];
           this.company$ = this.companiesDataService.getCompany(companyId)
             .pipe(
               tap((company: Company) => {
-                this.initChar(company);
+                this.company$$.next(company);
               })
             );
         }),
         takeUntil(this.unsubscribe$$)
+      )
+      .subscribe();
+  }
+
+  ngAfterViewInit() {
+    // this.activatedRoute.params
+    //   .pipe(
+    //     tap(params => {
+    //       const companyId = +params['companyId'];
+    //       this.company$ = this.companiesDataService.getCompany(companyId)
+    //         .pipe(
+    //           tap((company: Company) => {
+    //             setTimeout(() => {
+    //               this.initChar(company);
+    //             }, animationTimeout);
+    //           })
+    //         );
+    //     }),
+    //     takeUntil(this.unsubscribe$$)
+    //   )
+    //   .subscribe();
+
+    this.company$$
+      .asObservable()
+      .pipe(
+        tap((company: Company) => {
+          setTimeout(() => {
+            this.initChar(company);
+          }, animationTimeout);
+        })
       )
       .subscribe();
   }

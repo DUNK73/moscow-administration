@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { ActivityType } from '../analitics/models/activity-type.enum';
+import { slideInAnimation as topTileAnimation, bottomTileAnimation, rightTileAnimation } from './animations';
 
 @Component({
   selector: 'app-first-page',
   templateUrl: './first-page.component.html',
-  styleUrls: ['./first-page.component.less']
+  styleUrls: ['./first-page.component.less'],
+  animations: [
+    topTileAnimation,
+    bottomTileAnimation,
+    rightTileAnimation,
+    // animation triggers go here
+  ]
 })
 export class FirstPageComponent implements OnInit {
 
@@ -86,6 +93,10 @@ export class FirstPageComponent implements OnInit {
     );
 
 
+  }
+
+  public prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 
 }

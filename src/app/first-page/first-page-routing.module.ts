@@ -16,17 +16,7 @@ const routes: Routes = [
       [
         { path: '', component: ChildPrimaryComponent },
         { path: 'childSecondaryPath', component: PieChartComponent, outlet: 'childSecondary' },
-        { path: 'client-info-results', component: ClientInfoResultsTileComponent, outlet: 'childSecondary' },
-      ]
-  },
-  {
-    path: 'fp2',
-    component: FirstPageComponent,
-    children:
-      [
-        { path: 'fp2', component: ChildPrimaryComponent },
-        { path: 'childSecondaryPath', component: PieChartComponent, outlet: 'childSecondary' },
-        { path: 'client-info-results', component: ClientInfoResultsTileComponent, outlet: 'childSecondary' },
+        { path: 'clients-right-tile', component: ClientInfoResultsTileComponent, outlet: 'childSecondary' },
       ]
   },
   {
@@ -36,7 +26,7 @@ const routes: Routes = [
       [
         { path: '', component: ChildPrimaryComponent },
         { path: 'childSecondaryPath', component: PieChartComponent, outlet: 'childSecondary' },
-        { path: 'client-info-results', component: ClientInfoResultsTileComponent, outlet: 'childSecondary' },
+        { path: 'clients-right-tile', component: ClientInfoResultsTileComponent, outlet: 'childSecondary' },
       ]
   },
 ];

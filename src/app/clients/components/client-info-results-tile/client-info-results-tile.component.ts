@@ -8,6 +8,7 @@ import { Subject, Observable } from 'rxjs';
 import { ClientsDataService } from 'src/app/core/dtata-services/clients-data.service';
 import { CompaniesDataService } from 'src/app/core/dtata-services/companies-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { animationTimeout } from '../../../first-page/animations';
 
 @Component({
   selector: 'app-client-info-results-tile',
@@ -39,12 +40,14 @@ export class ClientInfoResultsTileComponent implements OnInit, OnDestroy, AfterV
       .pipe(
         switchMap(params => {
 
-          let companyId = +params['companyId'];
+          const companyId = +params['companyId'];
 
           return this.companiesDataService.getCompany(companyId)
             .pipe(
               tap((company: Company) => {
-                this.initChart(company);
+                setTimeout(() => {
+                  this.initChart(company);
+                }, animationTimeout);
               })
             );
         }),
