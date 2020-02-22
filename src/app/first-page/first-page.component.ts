@@ -19,6 +19,8 @@ export class FirstPageComponent implements OnInit {
   public currentDate = new Date();
   public currentTab: string;
 
+  public statisticButton: string;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -40,6 +42,8 @@ export class FirstPageComponent implements OnInit {
   }
 
   public toggle(tab: 'client' | 'apk' | 'prom') {
+
+    this.statisticButton = tab;
 
     let rout: string;
 

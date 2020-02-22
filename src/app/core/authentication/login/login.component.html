@@ -4,16 +4,18 @@
 </div>
 
 <section class="login">
-  <form class="login__form">
+  <form class="login__form" [formGroup]="this.form">
 
     <div class="login__field">
-      <input placeholder="логин" />
+      <input formControlName="username" placeholder="логин" />
     </div>
 
     <div class="login__field">
-      <input type="password" placeholder="пароль" />
+      <input type="password" [formControl]="this.form.get('password')" placeholder="пароль"  />
     </div>
 
-    <button class="button" (click)="login()">Войти</button>
+
+
+    <button type="button" class="button" (click)="login()">Войти</button>
   </form>
 </section>

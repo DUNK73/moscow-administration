@@ -37,8 +37,8 @@
           <app-bar-chart></app-bar-chart>
         </div>
         <div class="widget-analytics__buttons">
-          <a href="javascript:void(0)" (click)="toggle('apk')">Апк</a>
-          <a href="javascript:void(0)" (click)="toggle('prom')">Пром</a>
+          <a class="button button-tile" [ngClass]="{'button-tile--selected': statisticButton === 'apk'}" href="javascript:void(0)" (click)="toggle('apk');">Апк</a>
+          <a class="button button-tile" [ngClass]="{'button-tile--selected': statisticButton === 'prom'}" href="javascript:void(0)" (click)="toggle('prom');">Пром</a>
         </div>
       </section>
 
