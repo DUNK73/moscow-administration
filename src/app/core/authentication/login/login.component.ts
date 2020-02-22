@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { BaseHttpException } from '../../exceptions/baseException';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +34,21 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService
       .login(autenticationData.username, autenticationData.password)
-      .subscribe();
+      .pipe(
+        catchError(error => {
+          switch (true) {
+            case error instanceof BaseHttpException:
+              this.form.setErrors(error.errors);
+              break;
+
+            default:
+              break;
+          }
+          return throwError(error);
+        })
+      )
+      .subscribe(
+      );
   }
 
 }

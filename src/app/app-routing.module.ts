@@ -1,63 +1,24 @@
-import { AnaliticsRightTileForSubIndustryComponent } from './analitics/components/analitics-right-tile-for-subindusry/analitics-right-tile-for-subindusry.component';
-import { PieChartComponent } from './first-page/pie-chart/pie-chart.component';
-import { ChildComponent } from './shared/ChildComponent/ChildComponent.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OutletComponent } from './shared/outlet/outlet.component';
-import { SharedComponent } from './shared/shared.component';
-import { RootPrimaryComponent } from './shared/RootPrimaryComponent/RootPrimaryComponent.component';
-import { RootSecondaryComponent } from './shared/RootSecondaryComponent/RootSecondaryComponent.component';
-import { ChildPrimaryComponent } from './shared/ChildPrimaryComponent/ChildPrimaryComponent.component';
-import { ChildSecondaryComponent } from './shared/ChildSecondaryComponent/ChildSecondaryComponent.component';
-import { FirstPageComponent } from './first-page/first-page.component';
+import { AnaliticsBottomTileForSubIndustryComponent } from './analitics/components/analitics-bottom-tile-for-subindusry/analitics-bottom-tile-for-subindusry.component';
+import { AnaliticsBottomTileComponent } from './analitics/components/analitics-bottom-tile/analitics-bottom-tile.component';
+import { AnaliticsRightTileForSubIndustryComponent } from './analitics/components/analitics-right-tile-for-subindusry/analitics-right-tile-for-subindusry.component';
+import { AnaliticsRightTileComponent } from './analitics/components/analitics-right-tile/analitics-right-tile.component';
+import { AnaliticsTopTileComponent } from './analitics/components/analitics-top-tile/analitics-top-tile.component';
 import { ClientInfoResultsTileComponent } from './clients/components/client-info-results-tile/client-info-results-tile.component';
 import { ClientInfoTileComponent } from './clients/components/client-info-tile/client-info-tile.component';
-import { TopTileComponent } from './general-information/components/top-tile/top-tile.component';
-import { BottomTileComponent } from './general-information/components/bottom-tile/bottom-tile.component';
 import { ClientsComponent } from './clients/components/clients/clients.component';
-import { RightTileComponent } from './general-information/components/right-tile/right-tile.component';
-import { AnaliticsTopTileComponent } from './analitics/components/analitics-top-tile/analitics-top-tile.component';
-import { AnaliticsBottomTileComponent } from './analitics/components/analitics-bottom-tile/analitics-bottom-tile.component';
-import { AnaliticsRightTileComponent } from './analitics/components/analitics-right-tile/analitics-right-tile.component';
-import { AnaliticsBottomTileForSubIndustryComponent } from './analitics/components/analitics-bottom-tile-for-subindusry/analitics-bottom-tile-for-subindusry.component';
-import { LoginComponent } from './core/authentication/login/login.component';
 import { AutenticationGuard } from './core/authentication/authentication-guard.service';
+import { LoginComponent } from './core/authentication/login/login.component';
+import { FirstPageComponent } from './first-page/first-page.component';
+import { BottomTileComponent } from './general-information/components/bottom-tile/bottom-tile.component';
+import { RightTileComponent } from './general-information/components/right-tile/right-tile.component';
+import { TopTileComponent } from './general-information/components/top-tile/top-tile.component';
+import { OutletComponent } from './shared/outlet/outlet.component';
 
 
-const routes: Routes = [
-  {
-    path: 'p',
-    //loadChildren: () => import('./first-page/first-page.module').then(module => module.FirstPageModule)
-    component: SharedComponent,
-    children: [
-      {
-        path: 'pathName',
-        component: OutletComponent,
-        outlet: 'outletName'
-      },
-    ]
-  },
-  {
-    path: 'first-page',
-    loadChildren: () => import('./first-page/first-page.module').then(module => module.FirstPageModule)
-  },
-  {
-    path: 'pathName',
-    component: OutletComponent,
-    outlet: 'outletName'
-  },
-  // {
-  //   path: '',
-  //   component: SharedComponent,
-  //
-  // },
-  {
-    path: '',
-    redirectTo: 'first-page',
-    pathMatch: 'full'
-  },
 
-];
+
 
 const appRoutes: Routes = [
 
@@ -67,7 +28,6 @@ const appRoutes: Routes = [
     canActivate: [AutenticationGuard],
     children:
       [
-        { path: '', component: ChildPrimaryComponent },
 
         {
           path: 'clients-top-tile', component: ClientsComponent,
@@ -138,6 +98,7 @@ const appRoutes: Routes = [
 
       ]
   },
+  { path: '**', redirectTo: ''}
 ];
 
 @NgModule({

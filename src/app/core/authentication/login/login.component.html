@@ -4,18 +4,19 @@
 </div>
 
 <section class="login">
-  <form class="login__form" [formGroup]="this.form">
+  <form class="login__form" [formGroup]="form">
 
     <div class="login__field">
       <input formControlName="username" placeholder="логин" />
     </div>
 
     <div class="login__field">
-      <input type="password" [formControl]="this.form.get('password')" placeholder="пароль"  />
+      <input type="password" formControlName="password" placeholder="пароль"  />
     </div>
 
-
-
     <button type="button" class="button" (click)="login()">Войти</button>
+
+    <app-validation-errors-viewer [errors]="form.errors"></app-validation-errors-viewer>
+
   </form>
 </section>
