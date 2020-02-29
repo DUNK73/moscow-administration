@@ -37,4 +37,10 @@ export interface AnaliticsByCountry {
   volume: number;
 }
 
+export interface ExportInformation {
+  "date": Date;
+  "valueApk": number;
+  "valueProm": number;
+}
+
 

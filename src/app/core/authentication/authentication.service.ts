@@ -13,8 +13,23 @@ export class TokenData {
 })
 export class AuthenticationService {
 
-  public isLogin = false;
-  public token: string;
+  public isLogin(): boolean {
+    return !!this.token;
+  }
+
+  private _token: string;
+
+  public get token() {
+    if (this._token) {
+      return this._token;
+    }
+    return this._token = sessionStorage.getItem('token');
+  }
+
+  public set token(value: string) {
+    this._token = value;
+    sessionStorage.setItem('token', value);
+  }
 
   constructor(
     private http: HttpClient,
@@ -35,11 +50,10 @@ export class AuthenticationService {
       .pipe(
         tap((tokenData: TokenData) => {
           this.token = tokenData.token;
-
-          this.isLogin = true;
           this.router.navigate(['main']);
         })
       );
   }
+
 
 }

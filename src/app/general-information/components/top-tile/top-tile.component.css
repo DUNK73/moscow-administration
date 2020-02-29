@@ -1,4 +1,15 @@
 
+.widget-export {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.widget-export__chart {
+  flex-grow: 1;
+}
+
+
 .widget-export__title {
   display: flex;
   justify-content: space-between;

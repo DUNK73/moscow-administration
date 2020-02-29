@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Client } from 'src/app/models/client';
-import { Industry, AnaliticsByCountry, SubIndustry, Indicator } from '../../models/industry';
+import { Industry, AnaliticsByCountry, SubIndustry, Indicator, ExportInformation } from '../../models/industry';
 import { Company } from 'src/app/models/company';
 import { tap, map } from 'rxjs/operators';
 
@@ -23,6 +23,10 @@ export class AnaliticsDataService {
       ...data,
       value: data.volume
     } as Indicator;
+  }
+
+  public getAnaliticsExportInformation(): Observable<Array<ExportInformation>> {
+    return this.http.get<Array<ExportInformation>>('api/analitic/exportInformation');
   }
 
   public getAnalitics(): Observable<Array<Industry>> {

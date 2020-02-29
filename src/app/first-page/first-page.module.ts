@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClientsModule } from '../clients/clients.module';
+import { ChartModule } from '../general-information/components/top-tile/chart/chart.module';
 import { GeneralInformationModule } from '../general-information/general-information.module';
 import { AnaliticsModule } from './../analitics/analitics.module';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { ChartModule } from './chart/chart.module';
 import { FirstPageRoutingModule } from './first-page-routing.module';
 import { FirstPageComponent } from './first-page.component';
 import { MapChartModule } from './map-chart/map-chart.module';

@@ -1,12 +1,10 @@
 <section class="widget widget-export">
   <div class="widget-export__title">
     <div class="export-title__title">
-      <h2
-        class="export-title__title-info widget__block--light block-title"
-      >
+      <h2 class="export-title__title-info widget__block--light block-title">
         Объемы экспорта
       </h2>
-      <p class="export-title__title-date">{{ currentDate | date }}</p>
+      <p class="export-title__title-date">{{ currentDate | date : 'MM.dd.yyyy'}}</p>
     </div>
     <div class="export-title__legend">
       <ul class="legend-list widget__block--light">
@@ -22,6 +20,6 @@
     </div>
   </div>
   <div class="widget-export__chart">
-    <app-chart></app-chart>
+    <app-chart *ngIf="data$ | async as data"  [data]="data"></app-chart>
   </div>
 </section>
