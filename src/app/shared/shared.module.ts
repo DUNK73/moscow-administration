@@ -1,18 +1,23 @@
-import { OutletComponent } from './outlet/outlet.component';
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedComponent } from './shared.component';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { OutletComponent } from './outlet/outlet.component';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([]),
-    RouterModule
+    RouterModule,
+
+    PipesModule,
   ],
   declarations: [
-    
+
     OutletComponent,
+  ],
+  exports: [
+    PipesModule
   ]
 })
 export class SharedModule { }

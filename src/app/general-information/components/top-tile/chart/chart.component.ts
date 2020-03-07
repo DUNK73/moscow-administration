@@ -33,8 +33,15 @@ export class ChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
         chart.paddingRight = 20;
 
+        let d: Array<ExportInformation> = [];
 
-        chart.data = this.data;
+        this.data.forEach(x => {
+          if (!d.find(y => y.date === x.date)) {
+            d.push(x);
+          }
+        });
+
+        chart.data = d;
 
         const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.renderer.grid.template.location = 0;

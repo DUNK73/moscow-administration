@@ -41,7 +41,15 @@ export class AnaliticsTopTileComponent implements OnInit {
 
     this.data$ = this.analiticsDataService.getApkIndustries()
       .pipe(
-        switchMap((clients) => {
+        map((industryList) => {
+
+          let data = industryList.filter(x => x.title.toUpperCase() !== 'всего'.toUpperCase());
+          let total = industryList.find(x => x.title.toUpperCase() === 'всего'.toUpperCase());
+
+          return [...data, total];
+        }),
+
+        switchMap((industryList) => {
           return this.searchForm.valueChanges
             .pipe(
               startWith(null),
@@ -50,17 +58,19 @@ export class AnaliticsTopTileComponent implements OnInit {
                 turnoverSum: number;
                 exportSum: number;
               }) => {
+
                 if (searchValue) {
-                  return clients.filter(f => {
+                  industryList = industryList.filter(f => {
                     return (f.title || '').toUpperCase().includes((searchValue.title || '').toUpperCase())
                     //  && (f.turnoverSum && f.turnoverSum.toString() || '')
                     //    .includes((searchValue.turnoverSum && searchValue.turnoverSum.toString() || ''))
                     //  && (f.exportSum && f.exportSum.toString() || '')
                     //    .includes((searchValue.exportSum && searchValue.exportSum.toString() || ''));
                   });
-                } else {
-                  return clients;
                 }
+
+                return industryList;
+
               })
             );
         })

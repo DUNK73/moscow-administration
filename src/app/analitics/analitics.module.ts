@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AnaliticsTopTileComponent } from './components/analitics-top-tile/analitics-top-tile.component';
@@ -15,6 +16,8 @@ import { RouterModule } from '@angular/router';
     MapChartModule,
     FormsModule,
     ReactiveFormsModule,
+
+    SharedModule
   ],
   declarations: [
     AnaliticsTopTileComponent,
